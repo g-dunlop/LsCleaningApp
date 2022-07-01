@@ -3,15 +3,18 @@ package com.example.cleaner;
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
+import com.example.cleaner.models.other.Service;
 import com.example.cleaner.repositories.AdminRepository;
 import com.example.cleaner.repositories.CleanerRepository;
 import com.example.cleaner.repositories.CustomerRepository;
+import com.example.cleaner.repositories.ServiceRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,16 +32,21 @@ public class CleanerApplicationTests {
 	@Autowired
 	CustomerRepository customerRepository;
 
+	@Autowired
+	ServiceRepository serviceRepository;
+
+
 	private Admin admin;
 	private Cleaner cleaner;
 	private Customer customer;
+	private Service service;
 
 	@Test
 	public void contextLoads() {
 	}
 
 	@Test
-	public void adminHasAttributes(){
+	public void adminHasAttributes() {
 		Admin admin1 = new Admin(1L, "Bob", "2132134", "bob@bob", "Admin");
 		adminRepository.save(admin1);
 		assertEquals("Bob", admin1.getName());
@@ -48,7 +56,7 @@ public class CleanerApplicationTests {
 	}
 
 	@Test
-	public void canFindAllAdmins(){
+	public void canFindAllAdmins() {
 		Admin admin1 = new Admin(1L, "Bob", "2132134", "bob@bob", "Admin");
 		adminRepository.save(admin1);
 		List<Admin> admins = adminRepository.findAll();
@@ -56,26 +64,26 @@ public class CleanerApplicationTests {
 	}
 
 	@Test
-	public void cleanerHasAttributes(){
-		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5 );
+	public void cleanerHasAttributes() {
+		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
 		cleanerRepository.save(cleaner1);
 		assertEquals("Bill", cleaner1.getName());
 		assertEquals("342432", cleaner1.getPhoneNumber());
 		assertEquals("bill@bill", cleaner1.getEmail());
-		assertEquals("Cleaner",cleaner1.getRole());
+		assertEquals("Cleaner", cleaner1.getRole());
 		assertEquals(4.5, cleaner1.getRating());
 	}
 
 	@Test
-	public void canFindAllCleaners(){
-		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5 );
+	public void canFindAllCleaners() {
+		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
 		cleanerRepository.save(cleaner1);
 		List<Cleaner> cleaners = cleanerRepository.findAll();
 		assertEquals(1, cleaners.size());
 	}
 
 	@Test
-	public void customerHasAttributes(){
+	public void customerHasAttributes() {
 		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 		customerRepository.save(customer);
 		assertEquals("Robert", customer.getName());
@@ -87,10 +95,28 @@ public class CleanerApplicationTests {
 	}
 
 	@Test
-	public void canFindAllCustomers(){
+	public void canFindAllCustomers() {
 		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 		customerRepository.save(customer);
 		List<Customer> customers = customerRepository.findAll();
 		assertEquals(1, customers.size());
+	}
+
+	@Test
+	public void serviceHasAttributes() {
+		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
+		serviceRepository.save(service);
+		assertEquals("Domestic clean - 2 Hrs", service.getName());
+		assertEquals("Mop, bucket, spade", service.getEquipment());
+		assertEquals( new BigDecimal("50.50"), service.getPrice());
+	}
+
+
+	@Test
+	public void canFindAllServices(){
+		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
+		serviceRepository.save(service);
+		List<Service> services =  serviceRepository.findAll();
+		assertEquals(1, services.size());
 	}
 }
