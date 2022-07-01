@@ -2,8 +2,10 @@ package com.example.cleaner;
 
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
+import com.example.cleaner.models.users.Customer;
 import com.example.cleaner.repositories.AdminRepository;
 import com.example.cleaner.repositories.CleanerRepository;
+import com.example.cleaner.repositories.CustomerRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,11 +26,15 @@ public class CleanerApplicationTests {
 	@Autowired
 	CleanerRepository cleanerRepository;
 
+	@Autowired
+	CustomerRepository customerRepository;
+
 	private Admin admin;
+	private Cleaner cleaner;
+	private Customer customer;
 
 	@Test
 	public void contextLoads() {
-
 	}
 
 	@Test
@@ -60,7 +66,31 @@ public class CleanerApplicationTests {
 		assertEquals(4.5, cleaner1.getRating());
 	}
 
+	@Test
+	public void canFindAllCleaners(){
+		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5 );
+		cleanerRepository.save(cleaner1);
+		List<Cleaner> cleaners = cleanerRepository.findAll();
+		assertEquals(1, cleaners.size());
+	}
 
+	@Test
+	public void customerHasAttributes(){
+		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		customerRepository.save(customer);
+		assertEquals("Robert", customer.getName());
+		assertEquals("767676", customer.getPhoneNumber());
+		assertEquals("rob@robert", customer.getEmail());
+		assertEquals("Customer", customer.getRole());
+		assertEquals("17 The Lane", customer.getAddress());
+		assertEquals("FK54XE", customer.getPostcode());
+	}
 
-
+	@Test
+	public void canFindAllCustomers(){
+		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		customerRepository.save(customer);
+		List<Customer> customers = customerRepository.findAll();
+		assertEquals(1, customers.size());
+	}
 }

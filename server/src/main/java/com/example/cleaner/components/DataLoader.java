@@ -2,8 +2,10 @@ package com.example.cleaner.components;
 
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
+import com.example.cleaner.models.users.Customer;
 import com.example.cleaner.repositories.AdminRepository;
 import com.example.cleaner.repositories.CleanerRepository;
+import com.example.cleaner.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,6 +22,9 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     CleanerRepository cleanerRepository;
 
+    @Autowired
+    CustomerRepository customerRepository;
+
     public DataLoader(){
 
     }
@@ -33,5 +38,8 @@ public class DataLoader implements ApplicationRunner {
 
         Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5 );
         cleanerRepository.save(cleaner1);
+
+        Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+        customerRepository.save(customer);
     }
 }
