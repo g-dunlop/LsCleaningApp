@@ -1,7 +1,7 @@
 package com.example.cleaner.controllers;
 
-import com.example.cleaner.models.users.Admin;
-import com.example.cleaner.repositories.AdminRepository;
+import com.example.cleaner.models.users.Cleaner;
+import com.example.cleaner.repositories.CleanerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class AdminController {
+public class CleanerController {
 
     @Autowired
-    private AdminRepository adminRepository;
+    private CleanerRepository cleanerRepository;
 
-    @GetMapping(value ="/admins")
-    public ResponseEntity<List<Admin>> getAdmins(){
-        return new ResponseEntity<>(adminRepository.findAll(), HttpStatus.OK);
+    @GetMapping(value="/cleaners")
+    public ResponseEntity<List<Cleaner>> getCleaners(){
+        return new ResponseEntity<>(cleanerRepository.findAll(), HttpStatus.OK);
     }
+
 }
