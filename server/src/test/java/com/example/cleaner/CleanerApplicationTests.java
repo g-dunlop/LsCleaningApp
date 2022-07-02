@@ -4,10 +4,8 @@ import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
 import com.example.cleaner.models.other.Service;
-import com.example.cleaner.repositories.AdminRepository;
-import com.example.cleaner.repositories.CleanerRepository;
-import com.example.cleaner.repositories.CustomerRepository;
-import com.example.cleaner.repositories.ServiceRepository;
+import com.example.cleaner.models.users.Review;
+import com.example.cleaner.repositories.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,11 +33,15 @@ public class CleanerApplicationTests {
 	@Autowired
 	ServiceRepository serviceRepository;
 
+	@Autowired
+	ReviewRepository reviewRepository;
+
 
 	private Admin admin;
 	private Cleaner cleaner;
 	private Customer customer;
 	private Service service;
+	private Review review;
 
 	@Test
 	public void contextLoads() {
@@ -118,5 +120,14 @@ public class CleanerApplicationTests {
 		serviceRepository.save(service);
 		List<Service> services =  serviceRepository.findAll();
 		assertEquals(1, services.size());
+	}
+
+	@Test
+	public void reviewExists(){
+		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		customerRepository.save(customer);
+		Review review = new Review("15/07/2022",3.6, "pretty shit", customer);
+		reviewRepository.save(review);
+		assertEquals(3.6, review.getScore());
 	}
 }
