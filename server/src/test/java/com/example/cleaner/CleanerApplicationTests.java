@@ -106,7 +106,8 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void serviceHasAttributes() {
-		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
+		BigDecimal price = new BigDecimal("50.50");
+		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", price );
 		serviceRepository.save(service);
 		assertEquals("Domestic clean - 2 Hrs", service.getName());
 		assertEquals("Mop, bucket, spade", service.getEquipment());
@@ -116,7 +117,8 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void canFindAllServices(){
-		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
+		BigDecimal price = new BigDecimal("50.50");
+		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", price );
 		serviceRepository.save(service);
 		List<Service> services =  serviceRepository.findAll();
 		assertEquals(1, services.size());
@@ -126,8 +128,30 @@ public class CleanerApplicationTests {
 	public void reviewExists(){
 		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 		customerRepository.save(customer);
-		Review review = new Review("15/07/2022",3.6, "pretty shit", customer);
+		Cleaner cleaner1 = new Cleaner(2L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+		cleanerRepository.save(cleaner1);
+		Review review = new Review("15/07/2022",3.6, "pretty shit", cleaner1, customer);
 		reviewRepository.save(review);
 		assertEquals(3.6, review.getScore());
+		assertEquals(cleaner1, review.getCleaner());
+		assertEquals(customer, review.getCustomer());
+		assertEquals(2, review.getCleaner().getId());
 	}
+
+//	@Test
+//	public void canAddReview(){
+//		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+//		customerRepository.save(customer);
+//		Cleaner cleaner1 = new Cleaner(2L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+//		cleanerRepository.save(cleaner1);
+//		Review review = new Review("15/07/2022",3.6, "pretty shit", cleaner1, customer);
+//		reviewRepository.save(review);
+//		customer.addReview(review);
+////		customerRepository.save(customer);
+//		cleaner1.addReview(review);
+////		cleanerRepository.save(cleaner1);
+//		List<Review> reviews = reviewRepository.findAll();
+//		assertEquals(1, reviews.size() );
+//
+//	}
 }

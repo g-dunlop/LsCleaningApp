@@ -4,10 +4,8 @@ import com.example.cleaner.models.other.Service;
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
-import com.example.cleaner.repositories.AdminRepository;
-import com.example.cleaner.repositories.CleanerRepository;
-import com.example.cleaner.repositories.CustomerRepository;
-import com.example.cleaner.repositories.ServiceRepository;
+import com.example.cleaner.models.users.Review;
+import com.example.cleaner.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -31,13 +29,14 @@ public class DataLoader implements ApplicationRunner {
     @Autowired
     ServiceRepository serviceRepository;
 
+    @Autowired
+    ReviewRepository reviewRepository;
+
     public DataLoader(){
 
     }
 
     public void run(ApplicationArguments args) throws FileNotFoundException {
-
-
 
         Admin admin1 = new Admin(1L, "Bob", "2132134", "bob@bob", "Admin");
         adminRepository.save(admin1);
@@ -50,5 +49,8 @@ public class DataLoader implements ApplicationRunner {
 
         Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
         serviceRepository.save(service);
+
+        Review review = new Review("15/07/2022",3.6, "pretty shit",  cleaner1, customer);
+        reviewRepository.save(review);
     }
 }

@@ -1,11 +1,12 @@
 package com.example.cleaner.models.users;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name="reviews")
 public class Review {
 
     @Id
@@ -21,16 +22,24 @@ public class Review {
     @Column(name="comment")
     private String comment;
 
-    @JsonIgnoreProperties({"reviews"})
+
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "cleaner_id", nullable = false)
+    private Cleaner cleaner;
+
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    public Review(String date, double score, String comment, Customer customer) {
+    public Review(String date, double score, String comment, Cleaner cleaner, Customer customer) {
         this.date = date;
         this.score = score;
         this.comment = comment;
         this.customer = customer;
+        this.cleaner = cleaner;
     }
 
     public Review(){}
@@ -65,5 +74,13 @@ public class Review {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Cleaner getCleaner() {
+        return cleaner;
+    }
+
+    public void setCleaner(Cleaner cleaner) {
+        this.cleaner = cleaner;
     }
 }

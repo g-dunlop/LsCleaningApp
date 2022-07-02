@@ -1,6 +1,7 @@
 package com.example.cleaner.models.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Customer extends User {
     @Column(name="postcode")
     private String postcode;
 
-    @JsonIgnoreProperties
+
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
@@ -47,4 +48,15 @@ public class Customer extends User {
         this.postcode = postcode;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addReview(Review review){
+        this.reviews.add(review);
+    }
 }
