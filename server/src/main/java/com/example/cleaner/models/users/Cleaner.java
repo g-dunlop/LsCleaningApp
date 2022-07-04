@@ -16,7 +16,7 @@ public class Cleaner extends User {
     @Column(name="rating")
     private double rating;
 
-    @JsonIgnoreProperties({"cleaners"})
+    @JsonIgnoreProperties({"cleaner"})
     @OneToMany(mappedBy = "cleaner", fetch = FetchType.LAZY)
     private List<Review> reviews;
 

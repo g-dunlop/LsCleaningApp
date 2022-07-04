@@ -15,7 +15,7 @@ public class Customer extends User {
     @Column(name="postcode")
     private String postcode;
 
-    @JsonIgnoreProperties({"customers"})
+    @JsonIgnoreProperties({"customer"})
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
