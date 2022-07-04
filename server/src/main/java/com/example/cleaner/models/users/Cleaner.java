@@ -14,12 +14,12 @@ public class Cleaner extends User {
     @Column(name="rating")
     private double rating;
 
-
+    @JsonIgnoreProperties({"cleaners"})
     @OneToMany(mappedBy = "cleaner", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-    public Cleaner(Long id, String name, String phoneNumber, String email, String role, double rating) {
-        super(id, name, phoneNumber, email, role);
+    public Cleaner( String name, String phoneNumber, String email, String role, double rating) {
+        super( name, phoneNumber, email, role);
         this.rating = rating;
         this.reviews = new ArrayList<>();
     }

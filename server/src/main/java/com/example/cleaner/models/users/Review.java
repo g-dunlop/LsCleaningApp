@@ -29,7 +29,7 @@ public class Review {
     @JoinColumn(name = "cleaner_id", nullable = false)
     private Cleaner cleaner;
 
-
+    @JsonIgnoreProperties({"reviews"})
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;

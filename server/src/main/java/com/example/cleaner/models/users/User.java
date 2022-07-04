@@ -2,12 +2,12 @@ package com.example.cleaner.models.users;
 
 import javax.persistence.*;
 
-@Entity
+@MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 //    @Column(name="name")
@@ -22,8 +22,7 @@ public abstract class User {
 //    @Column(name="role")
     private String role;
 
-    public User(Long id, String name, String phoneNumber, String email, String role) {
-        this.id = id;
+    public User( String name, String phoneNumber, String email, String role) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;

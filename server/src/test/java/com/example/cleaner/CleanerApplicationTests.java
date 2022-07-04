@@ -49,7 +49,7 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void adminHasAttributes() {
-		Admin admin1 = new Admin(1L, "Bob", "2132134", "bob@bob", "Admin");
+		Admin admin1 = new Admin( "Bob", "2132134", "bob@bob", "Admin");
 		adminRepository.save(admin1);
 		assertEquals("Bob", admin1.getName());
 		assertEquals("2132134", admin1.getPhoneNumber());
@@ -59,7 +59,7 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void canFindAllAdmins() {
-		Admin admin1 = new Admin(1L, "Bob", "2132134", "bob@bob", "Admin");
+		Admin admin1 = new Admin( "Bob", "2132134", "bob@bob", "Admin");
 		adminRepository.save(admin1);
 		List<Admin> admins = adminRepository.findAll();
 		assertEquals(1, admins.size());
@@ -67,7 +67,7 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void cleanerHasAttributes() {
-		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+		Cleaner cleaner1 = new Cleaner( "Bill", "342432", "bill@bill", "Cleaner", 4.5);
 		cleanerRepository.save(cleaner1);
 		assertEquals("Bill", cleaner1.getName());
 		assertEquals("342432", cleaner1.getPhoneNumber());
@@ -78,7 +78,7 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void canFindAllCleaners() {
-		Cleaner cleaner1 = new Cleaner(1L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+		Cleaner cleaner1 = new Cleaner( "Bill", "342432", "bill@bill", "Cleaner", 4.5);
 		cleanerRepository.save(cleaner1);
 		List<Cleaner> cleaners = cleanerRepository.findAll();
 		assertEquals(1, cleaners.size());
@@ -86,7 +86,7 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void customerHasAttributes() {
-		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		Customer customer = new Customer( "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 		customerRepository.save(customer);
 		assertEquals("Robert", customer.getName());
 		assertEquals("767676", customer.getPhoneNumber());
@@ -98,7 +98,7 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void canFindAllCustomers() {
-		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		Customer customer = new Customer( "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 		customerRepository.save(customer);
 		List<Customer> customers = customerRepository.findAll();
 		assertEquals(1, customers.size());
@@ -126,9 +126,9 @@ public class CleanerApplicationTests {
 
 	@Test
 	public void reviewExists(){
-		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		Customer customer = new Customer( "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 		customerRepository.save(customer);
-		Cleaner cleaner1 = new Cleaner(2L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+		Cleaner cleaner1 = new Cleaner( "Bill", "342432", "bill@bill", "Cleaner", 4.5);
 		cleanerRepository.save(cleaner1);
 		Review review = new Review("15/07/2022",3.6, "pretty shit", cleaner1, customer);
 		reviewRepository.save(review);
@@ -136,20 +136,19 @@ public class CleanerApplicationTests {
 		assertEquals(cleaner1, review.getCleaner());
 		assertEquals(customer, review.getCustomer());
 		assertEquals(2, review.getCleaner().getId());
+		assertEquals(1, review.getCustomer().getId());
+		List<Review> reviews = reviewRepository.findAll();
+		assertEquals(1, reviews.size() );
 	}
 
 //	@Test
 //	public void canAddReview(){
-//		Customer customer = new Customer(1L, "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+//		Customer customer = new Customer( "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
 //		customerRepository.save(customer);
-//		Cleaner cleaner1 = new Cleaner(2L, "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+//		Cleaner cleaner1 = new Cleaner( "Bill", "342432", "bill@bill", "Cleaner", 4.5);
 //		cleanerRepository.save(cleaner1);
 //		Review review = new Review("15/07/2022",3.6, "pretty shit", cleaner1, customer);
 //		reviewRepository.save(review);
-//		customer.addReview(review);
-////		customerRepository.save(customer);
-//		cleaner1.addReview(review);
-////		cleanerRepository.save(cleaner1);
 //		List<Review> reviews = reviewRepository.findAll();
 //		assertEquals(1, reviews.size() );
 //

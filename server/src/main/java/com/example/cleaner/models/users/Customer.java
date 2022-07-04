@@ -15,13 +15,13 @@ public class Customer extends User {
     @Column(name="postcode")
     private String postcode;
 
-
+    @JsonIgnoreProperties({"customers"})
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
 
-    public Customer(Long id, String name, String phoneNumber, String email, String role, String address, String postcode) {
-        super(id, name, phoneNumber, email, role);
+    public Customer( String name, String phoneNumber, String email, String role, String address, String postcode) {
+        super( name, phoneNumber, email, role);
         this.address = address;
         this.postcode = postcode;
         this.reviews = new ArrayList<>();
