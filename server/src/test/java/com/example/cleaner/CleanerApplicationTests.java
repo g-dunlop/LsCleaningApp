@@ -4,7 +4,7 @@ import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
 import com.example.cleaner.models.other.Service;
-import com.example.cleaner.models.users.Review;
+import com.example.cleaner.models.other.Review;
 import com.example.cleaner.repositories.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;

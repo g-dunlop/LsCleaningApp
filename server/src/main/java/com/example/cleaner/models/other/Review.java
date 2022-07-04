@@ -1,5 +1,7 @@
-package com.example.cleaner.models.users;
+package com.example.cleaner.models.other;
 
+import com.example.cleaner.models.users.Cleaner;
+import com.example.cleaner.models.users.Customer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -24,7 +26,7 @@ public class Review {
 
 
 
-    @JsonBackReference
+    @JsonIgnoreProperties({"reviews"})
     @ManyToOne
     @JoinColumn(name = "cleaner_id", nullable = false)
     private Cleaner cleaner;

@@ -1,7 +1,12 @@
 package com.example.cleaner.models.other;
 
+import com.example.cleaner.models.users.Cleaner;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name="services")
@@ -20,10 +25,21 @@ public class Service {
     @Column(name="price")
     private BigDecimal price;
 
+    @JsonIgnoreProperties({"services"})
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name="cleaners_services",
+            joinColumns = {@JoinColumn(name = "service_id", nullable=true, updatable=false)},
+            inverseJoinColumns = {@JoinColumn(name="cleaner_id", nullable=true, updatable=false)}
+    )
+    private List<Cleaner> cleaners;
+
     public Service( String name, String equipment, BigDecimal price) {
         this.name = name;
         this.equipment = equipment;
         this.price = price;
+        this.cleaners = cleaners;
     }
 
     public Service(){
@@ -60,5 +76,13 @@ public class Service {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<Cleaner> getCleaners() {
+        return cleaners;
+    }
+
+    public void setCleaners(List<Cleaner> cleaners) {
+        this.cleaners = cleaners;
     }
 }

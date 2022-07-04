@@ -4,7 +4,7 @@ import com.example.cleaner.models.other.Service;
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
-import com.example.cleaner.models.users.Review;
+import com.example.cleaner.models.other.Review;
 import com.example.cleaner.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -52,5 +52,8 @@ public class DataLoader implements ApplicationRunner {
 
         Review review = new Review("15/07/2022",3.6, "pretty shit",  cleaner1, customer);
         reviewRepository.save(review);
+
+        cleaner1.addService(service);
+        cleanerRepository.save(cleaner1);
     }
 }

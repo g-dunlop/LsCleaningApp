@@ -1,6 +1,6 @@
 package com.example.cleaner.controllers;
 
-import com.example.cleaner.models.users.Review;
+import com.example.cleaner.models.other.Review;
 import com.example.cleaner.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

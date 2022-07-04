@@ -1,7 +1,9 @@
 package com.example.cleaner.models.users;
 
+import com.example.cleaner.models.other.Review;
+import com.example.cleaner.models.other.Service;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,10 +20,21 @@ public class Cleaner extends User {
     @OneToMany(mappedBy = "cleaner", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
+    @JsonIgnoreProperties({"cleaners"})
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name="cleaners_services",
+            joinColumns = {@JoinColumn(name = "cleaner_id", nullable=true, updatable=false)},
+            inverseJoinColumns = {@JoinColumn(name="service_id", nullable=true, updatable=false)}
+    )
+    private List<Service> services;
+
     public Cleaner( String name, String phoneNumber, String email, String role, double rating) {
         super( name, phoneNumber, email, role);
         this.rating = rating;
         this.reviews = new ArrayList<>();
+        this.services = new ArrayList<>();
     }
 
     public Cleaner() {
@@ -44,8 +57,16 @@ public class Cleaner extends User {
         this.reviews = reviews;
     }
 
-    public void addReview(Review review){
-        this.reviews.add(review);
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public void addService(Service service){
+        this.services.add(service);
     }
 }
 
