@@ -1,5 +1,6 @@
 package com.example.cleaner.models.users;
 
+import com.example.cleaner.models.other.Booking;
 import com.example.cleaner.models.other.Review;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -18,6 +19,10 @@ public class Customer extends User {
     @JsonIgnoreProperties({"customer"})
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<Review> reviews;
+
+    @JsonIgnoreProperties({"customer"})
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Booking> bookings;
 
 
     public Customer( String name, String phoneNumber, String email, String role, String address, String postcode) {
@@ -58,5 +63,13 @@ public class Customer extends User {
 
     public void addReview(Review review){
         this.reviews.add(review);
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

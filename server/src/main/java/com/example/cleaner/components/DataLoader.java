@@ -1,5 +1,6 @@
 package com.example.cleaner.components;
 
+import com.example.cleaner.models.other.Booking;
 import com.example.cleaner.models.other.Service;
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
@@ -13,6 +14,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -31,6 +36,9 @@ public class DataLoader implements ApplicationRunner {
 
     @Autowired
     ReviewRepository reviewRepository;
+
+    @Autowired
+    BookingRepository bookingRepository;
 
     public DataLoader(){
 
@@ -55,5 +63,14 @@ public class DataLoader implements ApplicationRunner {
 
         cleaner1.addService(service);
         cleanerRepository.save(cleaner1);
+
+        LocalDate date = LocalDate.parse("2020-01-08");
+        LocalTime time = LocalTime.parse("00:00:00");
+        List<Service> services = new ArrayList<>();
+
+        Booking booking = new Booking(date, time, cleaner1, customer, services, 56.037247, -3.819953 );
+        bookingRepository.save(booking);
+        booking.addService(service);
+        bookingRepository.save(booking);
     }
 }

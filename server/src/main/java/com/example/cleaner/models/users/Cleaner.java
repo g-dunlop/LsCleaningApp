@@ -1,5 +1,6 @@
 package com.example.cleaner.models.users;
 
+import com.example.cleaner.models.other.Booking;
 import com.example.cleaner.models.other.Review;
 import com.example.cleaner.models.other.Service;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,11 +31,16 @@ public class Cleaner extends User {
     )
     private List<Service> services;
 
+    @JsonIgnoreProperties({"cleaner"})
+    @OneToMany(mappedBy = "cleaner", fetch = FetchType.LAZY)
+    private List<Booking> bookings;
+
     public Cleaner( String name, String phoneNumber, String email, String role, double rating) {
         super( name, phoneNumber, email, role);
         this.rating = rating;
         this.reviews = new ArrayList<>();
         this.services = new ArrayList<>();
+        this.bookings = new ArrayList<>();
     }
 
     public Cleaner() {
@@ -67,6 +73,14 @@ public class Cleaner extends User {
 
     public void addService(Service service){
         this.services.add(service);
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }
 

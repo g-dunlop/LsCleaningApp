@@ -1,6 +1,7 @@
 package com.example.cleaner.models.other;
 
 import com.example.cleaner.models.users.Cleaner;
+import com.example.cleaner.models.users.Customer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
 
@@ -35,11 +36,17 @@ public class Service {
     )
     private List<Cleaner> cleaners;
 
+    @JsonIgnoreProperties({"services"})
+    @ManyToOne
+    @JoinColumn(name = "booking_id", nullable = true)
+    private Booking booking;
+
     public Service( String name, String equipment, BigDecimal price) {
         this.name = name;
         this.equipment = equipment;
         this.price = price;
         this.cleaners = cleaners;
+        this.booking = booking;
     }
 
     public Service(){
@@ -84,5 +91,13 @@ public class Service {
 
     public void setCleaners(List<Cleaner> cleaners) {
         this.cleaners = cleaners;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
     }
 }
