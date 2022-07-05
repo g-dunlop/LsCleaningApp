@@ -26,12 +26,12 @@ public class Review {
 
 
 
-    @JsonIgnoreProperties({"reviews"})
+    @JsonIgnoreProperties({"reviews", "bookings"})
     @ManyToOne
     @JoinColumn(name = "cleaner_id", nullable = false)
     private Cleaner cleaner;
 
-    @JsonIgnoreProperties({"reviews"})
+    @JsonIgnoreProperties({"reviews", "bookings"})
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
