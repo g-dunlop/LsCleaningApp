@@ -36,7 +36,7 @@ public class Booking {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @JsonIgnoreProperties({"booking"})
+    @JsonIgnoreProperties({"bookings"})
 //    @JsonBackReference
     @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
     private List<Service> services;

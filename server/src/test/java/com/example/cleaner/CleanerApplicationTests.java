@@ -1,5 +1,6 @@
 package com.example.cleaner;
 
+import com.example.cleaner.models.other.Booking;
 import com.example.cleaner.models.users.Admin;
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
@@ -13,6 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,12 +40,19 @@ public class CleanerApplicationTests {
 	@Autowired
 	ReviewRepository reviewRepository;
 
+	@Autowired
+	BookingRepository bookingRepository;
+
 
 	private Admin admin;
 	private Cleaner cleaner;
 	private Customer customer;
 	private Service service;
 	private Review review;
+
+	private Booking booking;
+
+
 
 	@Test
 	public void contextLoads() {
@@ -152,6 +163,32 @@ public class CleanerApplicationTests {
 //		reviewRepository.save(review);
 //		List<Review> reviews = reviewRepository.findAll();
 //		assertEquals(1, reviews.size() );
-//
 //	}
+
+	@Test
+	public void canAddServiceToBooking(){
+		List<Service> services = new ArrayList<>();
+		List<Cleaner> cleaners = new ArrayList<>();
+		Customer customer = new Customer( "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
+		customerRepository.save(customer);
+		Cleaner cleaner1 = new Cleaner( "Bill", "342432", "bill@bill", "Cleaner", 4.5);
+		cleanerRepository.save(cleaner1);
+		BigDecimal price = new BigDecimal("50.50");
+		Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", price );
+		serviceRepository.save(service);
+		LocalDate date = LocalDate.parse("2020-01-08");
+		LocalTime time = LocalTime.parse("00:00:00");
+
+		Booking booking = new Booking(date, time, cleaner1, customer, services, 56.037247, -3.819953 );
+		bookingRepository.save(booking);
+		booking.addService(service);
+		bookingRepository.save(booking);
+		assertEquals(service, booking.getServices().get(0));
+		service.addCleaner(cleaner1);
+		serviceRepository.save(service);
+		assertEquals(cleaner1, service.getCleaners().get(0));
+		cleaner1.addService(service);
+		cleanerRepository.save(cleaner1);
+		assertEquals(service, cleaner1.getServices().get(0));
+	}
 }

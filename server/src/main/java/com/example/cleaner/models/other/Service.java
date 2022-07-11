@@ -7,6 +7,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -45,7 +46,7 @@ public class Service {
         this.name = name;
         this.equipment = equipment;
         this.price = price;
-        this.cleaners = cleaners;
+        this.cleaners = new ArrayList<>();
         this.booking = booking;
     }
 
@@ -91,6 +92,10 @@ public class Service {
 
     public void setCleaners(List<Cleaner> cleaners) {
         this.cleaners = cleaners;
+    }
+
+    public void addCleaner(Cleaner cleaner){
+        this.cleaners.add(cleaner);
     }
 
     public Booking getBooking() {

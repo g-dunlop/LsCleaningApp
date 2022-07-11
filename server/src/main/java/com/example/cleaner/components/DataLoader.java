@@ -57,12 +57,14 @@ public class DataLoader implements ApplicationRunner {
 
         Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
         serviceRepository.save(service);
+//        service.addCleaner(cleaner1);
+//		serviceRepository.save(service);
+		cleaner1.addService(service);
+		cleanerRepository.save(cleaner1);
+
 
         Review review = new Review("15/07/2022",3.6, "pretty shit",  cleaner1, customer);
         reviewRepository.save(review);
-
-        cleaner1.addService(service);
-        cleanerRepository.save(cleaner1);
 
         LocalDate date = LocalDate.parse("2020-01-08");
         LocalTime time = LocalTime.parse("00:00:00");
