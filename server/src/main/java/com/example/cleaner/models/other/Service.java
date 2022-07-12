@@ -2,6 +2,7 @@ package com.example.cleaner.models.other;
 
 import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cascade;
 
@@ -37,17 +38,23 @@ public class Service {
     )
     private List<Cleaner> cleaners;
 
-    @JsonIgnoreProperties({"services"})
-    @ManyToOne
-    @JoinColumn(name = "booking_id", nullable = true)
-    private Booking booking;
+    @JsonIgnoreProperties({"services", "cleaners"})
+//    @JsonBackReference
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name = "services_bookings",
+            joinColumns = {@JoinColumn(name="service_id", nullable=false, updatable=false)},
+            inverseJoinColumns = {@JoinColumn(name="booking_id", nullable=false, updatable=false)}
+    )
+    private List<Booking> bookings;
 
     public Service( String name, String equipment, BigDecimal price) {
         this.name = name;
         this.equipment = equipment;
         this.price = price;
         this.cleaners = new ArrayList<>();
-        this.booking = booking;
+        this.bookings = new ArrayList<>();
     }
 
     public Service(){
@@ -98,11 +105,15 @@ public class Service {
         this.cleaners.add(cleaner);
     }
 
-    public Booking getBooking() {
-        return booking;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
     public void setBooking(Booking booking) {
-        this.booking = booking;
+        this.bookings = bookings;
+    }
+
+    public void addBooking(Booking booking) {
+        this.bookings.add(booking);
     }
 }

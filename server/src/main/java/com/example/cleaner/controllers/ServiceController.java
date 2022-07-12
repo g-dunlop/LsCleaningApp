@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -19,5 +20,10 @@ public class ServiceController {
     @GetMapping(value="/services")
     public ResponseEntity<List<Service>> getServices(){
         return new ResponseEntity<>(serviceRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value="/services/{id}")
+    public ResponseEntity getServices(@PathVariable Long id){
+        return new ResponseEntity<>(serviceRepository.findById(id), HttpStatus.OK);
     }
 }

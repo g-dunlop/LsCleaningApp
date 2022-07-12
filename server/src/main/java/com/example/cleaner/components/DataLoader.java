@@ -74,5 +74,7 @@ public class DataLoader implements ApplicationRunner {
         bookingRepository.save(booking);
         booking.addService(service);
         bookingRepository.save(booking);
+
+
     }
 }

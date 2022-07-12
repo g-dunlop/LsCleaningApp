@@ -4,6 +4,7 @@ import com.example.cleaner.models.users.Cleaner;
 import com.example.cleaner.models.users.Customer;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -36,9 +37,15 @@ public class Booking {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @JsonIgnoreProperties({"bookings"})
+    @JsonIgnoreProperties({"bookings", "cleaners"})
 //    @JsonBackReference
-    @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name="services_bookings",
+            joinColumns = {@JoinColumn(name = "booking_id", nullable=false, updatable=false)},
+            inverseJoinColumns = {@JoinColumn(name = "service_id", nullable=false, updatable=false)}
+    )
     private List<Service> services;
 
     @Column(name="Latitude")

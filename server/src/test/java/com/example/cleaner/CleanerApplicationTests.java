@@ -183,7 +183,7 @@ public class CleanerApplicationTests {
 		bookingRepository.save(booking);
 		booking.addService(service);
 		bookingRepository.save(booking);
-		assertEquals(service, booking.getServices().get(0));
+		assertEquals("50.50", booking.getServices().get(0).getPrice());
 		service.addCleaner(cleaner1);
 		serviceRepository.save(service);
 		assertEquals(cleaner1, service.getCleaners().get(0));

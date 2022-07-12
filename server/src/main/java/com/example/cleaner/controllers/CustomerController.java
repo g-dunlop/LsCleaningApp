@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -19,5 +20,10 @@ public class CustomerController {
     @GetMapping(value="/customers")
     public ResponseEntity<List<Customer>> getCustomers(){
         return new ResponseEntity<>(customerRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping(value="/customers/{id}")
+    public ResponseEntity getCustomer(@PathVariable Long id){
+        return new ResponseEntity<>(customerRepository.findById(id), HttpStatus.OK);
     }
 }
