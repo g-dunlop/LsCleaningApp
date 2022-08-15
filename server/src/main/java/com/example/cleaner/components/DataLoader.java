@@ -55,12 +55,18 @@ public class DataLoader implements ApplicationRunner {
         Customer customer = new Customer( "Robert", "767676", "rob@robert", "Customer", "17 The Lane", "FK54XE");
         customerRepository.save(customer);
 
-        Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("50.50"));
+        Service service = new Service( "Domestic clean - 2 Hrs", "Mop, bucket, spade", new BigDecimal("15.00"));
         serviceRepository.save(service);
 //        service.addCleaner(cleaner1);
 //		serviceRepository.save(service);
 		cleaner1.addService(service);
 		cleanerRepository.save(cleaner1);
+
+        Service service2 = new Service( "Domestic clean - 3 Hrs", "Mop, bucket, spade", new BigDecimal("15.00"));
+        serviceRepository.save(service2);
+
+        Service service3 = new Service( "Ironing", "Mop, bucket, spade", new BigDecimal("12.00"));
+        serviceRepository.save(service3);
 
 
         Review review = new Review("15/07/2022",3.6, "pretty shit",  cleaner1, customer);
